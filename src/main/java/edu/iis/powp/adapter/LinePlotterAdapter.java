@@ -3,18 +3,21 @@ package edu.iis.powp.adapter;
 import edu.iis.client.plottermagic.IPlotter;
 import edu.kis.powp.drawer.panel.DrawPanelController;
 import edu.kis.powp.drawer.shape.ILine;
-import edu.kis.powp.drawer.shape.LineFactory;
 
 /**
  * Plotter adapter to drawer with several bugs.
  */
-public class PlotterDrawerAdapter implements IPlotter {
+public class LinePlotterAdapter implements IPlotter {
 
 	private DrawPanelController drawPanelController;
 	private int startX = 0, startY = 0;
+	private ILine line;
+	private String label;
 
-	public PlotterDrawerAdapter(DrawPanelController drawPanelController) {
+	public LinePlotterAdapter(DrawPanelController drawPanelController, ILine line, String label) {
 		this.drawPanelController = drawPanelController;
+		this.line = line;
+		this.label = label;
 	}
 
 	@Override
@@ -25,7 +28,6 @@ public class PlotterDrawerAdapter implements IPlotter {
 
 	@Override
 	public void drawTo(int x, int y) {
-		ILine line = LineFactory.getBasicLine();
 		line.setStartCoordinates(this.startX, this.startY);
 		line.setEndCoordinates(x, y);
 
@@ -36,6 +38,6 @@ public class PlotterDrawerAdapter implements IPlotter {
 
 	@Override
 	public String toString() {
-		return "SIMULATION PLOTTER";
+		return label;
 	}
 }

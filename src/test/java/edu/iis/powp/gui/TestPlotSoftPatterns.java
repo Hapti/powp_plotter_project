@@ -1,23 +1,25 @@
 package edu.iis.powp.gui;
 
-import java.awt.EventQueue;
+import edu.iis.client.plottermagic.ClientPlotter;
+import edu.iis.client.plottermagic.IPlotter;
+import edu.iis.powp.adapter.LinePlotterAdapter;
+import edu.iis.powp.adapter.PlotterDrawerAdapter;
+import edu.iis.powp.app.Application;
+import edu.iis.powp.events.predefine.SelectTestFigure2OptionListener;
+import edu.iis.powp.events.predefine.SelectTestFigureOptionListener;
+import edu.iis.powp.features.DrawerFeature;
+import edu.kis.powp.drawer.shape.LineFactory;
+
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import edu.iis.client.plottermagic.ClientPlotter;
-import edu.iis.client.plottermagic.IPlotter;
-import edu.iis.powp.adapter.PlotterDrawerAdapter;
-import edu.iis.powp.app.Application;
-import edu.iis.powp.events.predefine.SelectChangeVisibleOptionListener;
-import edu.iis.powp.events.predefine.SelectTestFigure2OptionListener;
-import edu.iis.powp.events.predefine.SelectTestFigureOptionListener;
-import edu.iis.powp.features.DrawerFeature;
-import edu.kis.powp.drawer.panel.DefaultDrawerFrame;
-import edu.kis.powp.drawer.panel.DrawPanelController;
-
 public class TestPlotSoftPatterns {
 	private final static Logger logger = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	private static final String BASIC_LINE_DRIVER_LABEL = "BASIC LINE PLOTTER SIMULATION";
+	private static final String DOTTED_LINE_DRIVER_LABEL = "DOTTED LINE PLOTTER SIMULATION";
+	private static final String SPECIAL_LINE_DRIVER_LABEL = "SPECIAL LINE PLOTTER SIMULATION";
 
 	/**
 	 * Setup test concerning preset figures in context.
@@ -48,7 +50,19 @@ public class TestPlotSoftPatterns {
 		application.getDriverManager().setCurrentPlotter(clientPlotter);
 
 		IPlotter plotter = new PlotterDrawerAdapter(DrawerFeature.getDrawerController());
-		application.addDriver("Buggy Simulator", plotter);
+		application.addDriver("Plotter simulator", plotter);
+
+		IPlotter basicLinePlotter = new LinePlotterAdapter(DrawerFeature.getDrawerController(),
+				LineFactory.getBasicLine(), BASIC_LINE_DRIVER_LABEL);
+		application.addDriver("Basic line plotter simulator", basicLinePlotter);
+
+		IPlotter dottedLinePlotter = new LinePlotterAdapter(DrawerFeature.getDrawerController(),
+				LineFactory.getDottedLine(), DOTTED_LINE_DRIVER_LABEL);
+		application.addDriver("Dotted line plotter simulator", dottedLinePlotter);
+
+		IPlotter specialLinePlotter = new LinePlotterAdapter(DrawerFeature.getDrawerController(),
+				LineFactory.getSpecialLine(), SPECIAL_LINE_DRIVER_LABEL);
+		application.addDriver("Special line plotter simulator", specialLinePlotter);
 
 		application.updateDriverInfo();
 	}
