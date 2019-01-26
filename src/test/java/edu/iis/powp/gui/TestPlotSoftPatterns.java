@@ -53,18 +53,19 @@ public class TestPlotSoftPatterns {
 		application.updateDriverInfo();
 	}
 
-	/**
-	 * Auxiliary routines to enable using Buggy Simulator.
-	 * 
-	 * @param application
-	 *            Application context.
-	 */
-	private static void setupDefaultDrawerVisibilityManagement(Application application) {
-		DefaultDrawerFrame defaultDrawerWindow = DefaultDrawerFrame.getDefaultDrawerFrame();
-		application.addComponentMenuElementWithCheckBox(DrawPanelController.class, "Default Drawer Visibility",
-				new SelectChangeVisibleOptionListener(defaultDrawerWindow), true);
-		defaultDrawerWindow.setVisible(true);
-	}
+//	/**
+//	 * Auxiliary routines to enable using Buggy Simulator.
+//	 *
+//	 * @param application
+//	 *            Application context.
+//	 */
+// adds new, unnecessary window and menu items.
+//	private static void setupDefaultDrawerVisibilityManagement(Application application) {
+//		DefaultDrawerFrame defaultDrawerWindow = DefaultDrawerFrame.getDefaultDrawerFrame();
+//		application.addComponentMenuElementWithCheckBox(DrawPanelController.class, "Default Drawer Visibility",
+//				new SelectChangeVisibleOptionListener(defaultDrawerWindow), true);
+//		defaultDrawerWindow.setVisible(true);
+//	}
 
 	/**
 	 * Setup menu for adjusting logging settings.
@@ -89,20 +90,20 @@ public class TestPlotSoftPatterns {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				Application app = new Application();
-				DrawerFeature.setupDrawerPlugin(app);
+		// using Java 8 lambda instead of old-fashioned "new Runnable"
+		EventQueue.invokeLater(() -> {
+            Application app = new Application();
+            DrawerFeature.setupDrawerPlugin(app);
 
-				setupDefaultDrawerVisibilityManagement(app);
+            //adds new window
+            //setupDefaultDrawerVisibilityManagement(app);
 
-				setupDrivers(app);
-				setupPresetTests(app);
-				setupLogger(app);
+            setupDrivers(app);
+            setupPresetTests(app);
+            setupLogger(app);
 
-				app.setVisibility(true);
-			}
-		});
+            app.setVisibility(true);
+        });
 	}
 
 }
